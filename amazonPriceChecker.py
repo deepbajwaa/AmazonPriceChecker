@@ -21,14 +21,16 @@ def check_price():
     s[1] = '.'
     convert_price = float("".join(s))
 
-    if(convert_price <= 1.50):
-        print("okie")
     print(convert_price)
     print(title.strip())
 
+    if(convert_price <= 1.50):
+        send_mail()
+    
+
 #establish connection with gmail
 def send_mail():
-    server = smtplib.STMP('stmp.gmail.com', 587)
+    server = smtplib.SMTP('smtp.gmail.com', 587)
     server.ehlo()
     server.starttls()
     server.ehlo()
@@ -38,12 +40,13 @@ def send_mail():
     body = 'Check the amazon link: https://www.amazon.ca/Samsung-RU7100-UN75RU7100FXZC-Canada-Version/dp/B07NC7N3G6/ref=sr_1_3?keywords=samsung+tv&qid=1577636170&refinements=p_n_size_browse-bin%3A17304154011&rnid=3236496011&s=electronics&sr=1-3. The Price has dipped below $1500.'
 
     msg = f"Subject: {subject}\n\n{body}"
-    server.send_mail(
-        'The python price checker program',
+    server.sendmail(
+        'deep43055@gmail.com ',
         'deep43055@gmail.com',
         msg
     )
 
     print('An email has been sent!')
     server.quit()
-    
+
+check_price()
